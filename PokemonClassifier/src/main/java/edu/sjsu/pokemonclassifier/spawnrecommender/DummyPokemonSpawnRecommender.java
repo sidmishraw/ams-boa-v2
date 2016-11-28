@@ -428,7 +428,7 @@ public class DummyPokemonSpawnRecommender implements Serializable {
 			  .append("\t")
 			  .append("SPAWN LONGITUDE CO-ORDINATE")
 			  .append("\t")
-			  .append("DISTANCE FROM ME")
+			  .append("DISTANCE FROM ME(in meters)")
 			  .append("\t")
 			  .append("PAST SPAWN FREQUENCY")
 			  .append("\n");
