@@ -126,4 +126,34 @@ public class AccountManagementDAO {
 
 		return allTransactions;
 	}
+
+	/**
+	 * 
+	 * @return Set<Transaction>
+	 */
+	public Set<Transaction> getTransactionsTillNow(Time tillDate) {
+
+		Set<Transaction> allTransactionsTillDate = new HashSet<>();
+
+		for ( Transaction transaction : transactionStore ) {
+
+			if ( transaction.getDate().compareTo(new Time(Calendar.getInstance().getTimeInMillis())) < 1 ) {
+
+				allTransactionsTillDate.add(transaction);
+			}
+		}
+
+		return allTransactionsTillDate;
+	}
+
+	/**
+	 * 
+	 * @param fromDate
+	 * @return Set<Transaction>
+	 * @throws Exception 
+	 */
+	public Set<Transaction> getTransactionsFromDate(Time fromDate) throws Exception {
+
+		return getTransactions( fromDate, new Time(Calendar.getInstance().getTimeInMillis()) );
+	}
 }
