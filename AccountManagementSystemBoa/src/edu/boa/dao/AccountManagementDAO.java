@@ -9,51 +9,151 @@ import edu.boa.exceptions.SaveFailedException;
 import edu.boa.utils.time.Time;
 
 /**
- * @author Boa
+ * @author sidmishraw
  */
 public class AccountManagementDAO {
+
+	private static AccountManagementDAO accountManagementDAO = null;
+
+	/**
+	 * Static datastructures to hold the Accounts and transactions
+	 * since no DB or IO is being used
+	 * Just of the demo
+	 */
+	private static Map<String, Account> accountStore 		= new HashMap<>();
+	private static Set<Transaction> transactionStore 		= new HashSet<>();
 
 	/**
 	 * Default constructor
 	 */
-	public AccountManagementDAO() {
+	private AccountManagementDAO() {}
+
+	/**
+	 * Singleton instance of the DAO
+	 * 
+	 * @return AccountManagementDAO
+	 */
+	public static AccountManagementDAO getInstance() {
+
+		if ( null == accountManagementDAO ) {
+			
+			return new AccountManagementDAO();
+		}
+
+		return accountManagementDAO;
 	}
 
 	/**
 	 * @param account 
-	 * @return
+	 * @return boolean
 	 */
 	public boolean saveAccount(Account account) throws SaveFailedException {
-		// TODO implement here
-		return false;
+
+		accountStore.put(account.getID(), account);
+
+		return true;
 	}
 
 	/**
 	 * @param transaction 
-	 * @return
+	 * @return boolean
 	 */
 	public boolean saveTransaction(Transaction transaction) throws SaveFailedException {
-		// TODO implement here
-		return false;
+
+		transactionStore.add(transaction);
+
+		return true;
 	}
 
 	/**
-	 * @param accountName 
-	 * @return
+	 * @param accountID
+	 * @return Account
 	 */
-	public Account getAccount(String accountName) throws AccountNotFoundException {
-		// TODO implement here
-		return null;
+	public Account getAccount(String accountID) throws AccountNotFoundException {
+
+		if ( null == accountStore.get(accountID) ) {
+
+			throw new AccountNotFoundException("Account was not found.");
+		}
+
+		return accountStore.get(accountID);
 	}
 
 	/**
 	 * @param fromDate 
 	 * @param toDate 
-	 * @return
+	 * @return Set<Transaction>
 	 */
 	public Set<Transaction> getTransactions(Time fromDate, Time toDate) throws Exception {
-		// TODO implement here
-		return null;
+
+		Set<Transaction> transactions = new HashSet<>();
+
+		for ( Transaction transaction : transactionStore ) {
+
+			if ( transaction.getDate().compareTo(fromDate) >= 0 && transaction.getDate().compareTo(toDate) <= 0 ) {
+
+				transactions.add(transaction);
+			}
+		}
+
+		return transactions;
 	}
 
+	/**
+	 * gets all the accounts 
+	 * 
+	 * @return Set<Account>
+	 */
+	public Set<Account> getAllAccounts() {
+
+		Set<Account> allAccounts = new HashSet<>();
+
+		for ( Map.Entry<String, Account> entry : accountStore.entrySet() ) {
+
+			allAccounts.add(entry.getValue());
+		}
+
+		return allAccounts;
+	}
+
+	/**
+	 * 
+	 * @return Set<Transaction>
+	 */
+	public Set<Transaction> getAllTransactions() {
+
+		Set<Transaction> allTransactions = new HashSet<>(transactionStore);
+
+		return allTransactions;
+	}
+
+	/**
+	 * 
+	 * @return Set<Transaction>
+	 */
+	public Set<Transaction> getTransactionsTillNow(Time tillDate) {
+
+		Set<Transaction> allTransactionsTillDate = new HashSet<>();
+
+		for ( Transaction transaction : transactionStore ) {
+
+			if ( transaction.getDate().compareTo(new Time(Calendar.getInstance().getTimeInMillis())) < 1 ) {
+
+				allTransactionsTillDate.add(transaction);
+			}
+		}
+
+		return allTransactionsTillDate;
+	}
+
+	/**
+	 * 
+	 * @param fromDate
+	 * @return Set<Transaction>
+	 * @throws Exception 
+	 */
+	public Set<Transaction> getTransactionsFromDate(Time fromDate) throws Exception {
+
+		return getTransactions( fromDate, new Time(Calendar.getInstance().getTimeInMillis()) );
+	}
 }
