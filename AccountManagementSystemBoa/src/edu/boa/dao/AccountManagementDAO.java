@@ -33,7 +33,7 @@ public class AccountManagementDAO {
 	 * 
 	 * @return AccountManagementDAO
 	 */
-	public AccountManagementDAO getInstance() {
+	public static AccountManagementDAO getInstance() {
 
 		if ( null == accountManagementDAO ) {
 			
