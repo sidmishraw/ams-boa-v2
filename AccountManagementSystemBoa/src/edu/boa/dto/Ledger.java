@@ -122,7 +122,7 @@ public class Ledger implements Serializable {
 		builder.append("Ledger [accountSummaries=");
 		builder.append("\n");
 		for (AccountSummary as: accountSummaries) {
-			builder.append(as.toString());
+			builder.append(as.toString);
 			builder.append("\n");
 		}
 		builder.append(", dateGenerated=");
