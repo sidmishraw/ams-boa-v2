@@ -23,7 +23,12 @@ public class Account implements Serializable {
 	 * 
 	 */
 	private String ID;
-
+	
+	/**
+    * 
+    */
+	private Boolean isReversed;
+	
 	/**
 	 * 
 	 */
@@ -50,9 +55,20 @@ public class Account implements Serializable {
 		this.name = name;
 		this.balance = balance;
 		this.type = type;
+		this.isReversed = false;
 	}
 
-	/**
+	public Boolean getIsReversed()
+   {
+      return isReversed;
+   }
+
+   public void setIsReversed(Boolean isReversed)
+   {
+      this.isReversed = isReversed;
+   }
+
+   /**
 	 * @return the iD
 	 */
 	public String getID() {
