@@ -25,7 +25,7 @@ public class Ledger implements Serializable {
 	/**
 	 * 
 	 */
-	private Set<Account> accounts;
+	private Set<AccountSummary> accountSummaries;
 
 	/**
 	 * 
@@ -36,24 +36,24 @@ public class Ledger implements Serializable {
 	 * @param accounts
 	 * @param dateGenerated
 	 */
-	public Ledger(Set<Account> accounts, Time dateGenerated) {
+	public Ledger(Set<AccountSummary> accountSummaries, Time dateGenerated) {
 		super();
-		this.accounts = accounts;
+		this.accountSummaries = accountSummaries;
 		this.dateGenerated = dateGenerated;
 	}
 
 	/**
 	 * @return the accounts
 	 */
-	public Set<Account> getAccounts() {
-		return accounts;
+	public Set<Account> getAccountSummaries() {
+		return accountSummaries;
 	}
 
 	/**
 	 * @param accounts the accounts to set
 	 */
-	public void setAccounts(Set<Account> accounts) {
-		this.accounts = accounts;
+	public void setAccountSummaries(Set<AccountSummaries> accountSummaries) {
+		this.accountSummaries = accountSummaries;
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class Ledger implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((accounts == null) ? 0 : accounts.hashCode());
+		result = prime * result + ((accountSummaries == null) ? 0 : accountSummaries.hashCode());
 		result = prime * result + ((dateGenerated == null) ? 0 : dateGenerated.hashCode());
 		return result;
 	}
@@ -97,11 +97,11 @@ public class Ledger implements Serializable {
 			return false;
 		}
 		Ledger other = (Ledger) obj;
-		if (accounts == null) {
-			if (other.accounts != null) {
+		if (accountSummaries == null) {
+			if (other.accountSummaries != null) {
 				return false;
 			}
-		} else if (!accounts.equals(other.accounts)) {
+		} else if (!accountSummaries.equals(other.accounts)) {
 			return false;
 		}
 		if (dateGenerated == null) {
@@ -120,8 +120,13 @@ public class Ledger implements Serializable {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Ledger [accounts=");
-		builder.append(accounts);
+		builder.append("Ledger [accountSummaries=");
+		builder.append("\n");
+		for (AccountSummary as: accountSummaries) {
+			builder.append(as.toString);
+			builder.append("\n");
+		}
+
 		builder.append(", dateGenerated=");
 		builder.append(dateGenerated);
 		builder.append("]");
