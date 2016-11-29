@@ -4,6 +4,7 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -37,27 +38,21 @@ public class AccountManagementService {
 	 * @param accountType 
 	 * @return
 	 */
-   public boolean createAccount(String accountName, AccountType accountType)
+   public Account createAccount(String accountName, AccountType accountType) throws SaveFailedException
    {
       Account a = new Account(accountName,
             new Money("USD", new BigDecimal(0), "Dollars"), accountType);
       //check for unique name and save account
-      try
-      {
-         AccountManagementDAO.getInstance().getAccount(accountName);
-         AccountManagementDAO.getInstance().saveAccount(a);
-      } catch (Exception e)
-      {
-         return false;
-      }
-      return true;
+      
+      AccountManagementDAO.getInstance().saveAccount(a);
+      return a;
    }
 
 	/**
 	 * @param accountName 
 	 * @return
 	 */
-	public boolean reverseAccount(String accountName) {
+	public boolean reverseAccount(String accountID) {
 		// TODO implement here
 		return false;
 	}
@@ -76,7 +71,6 @@ public class AccountManagementService {
       AccountManagementDAO d = AccountManagementDAO.getInstance();
       //check 'equity = assets - liabilities'
 
-      
       try
       {
          d.saveTransaction(t);
@@ -112,10 +106,18 @@ public class AccountManagementService {
 	 * @param toDate 
 	 * @param fromDate 
 	 * @return
+	 * @throws Exception 
 	 */
-	public AccountSummary viewTransactionsAndBalanceOfAccount(Account account, Time toDate, Time fromDate) {
-		// TODO implement here
-		return null;
+	public AccountSummary viewTransactionsAndBalanceOfAccount(Account account, Time toDate, Time fromDate) throws Exception {
+      AccountManagementDAO d = AccountManagementDAO.getInstance();
+      Set<Transaction> allTransactions = d.getTransactions(fromDate, toDate);
+      Set<Transaction> accountTransactions = new HashSet<Transaction>();
+      for (Transaction t : allTransactions) {
+         if (t.getCreditedAccount() == account || t.getDebitedAccount() == account) {
+            accountTransactions.add(t);
+         }
+      }
+		return new AccountSummary(account, accountTransactions, fromDate, toDate);
 	}
 
 	/**
@@ -141,8 +143,8 @@ public class AccountManagementService {
 	 * @param toDate 
 	 * @return
 	 */
-	public BalanceSheet generateBalanceSheet(Time fromDate, Time toDate) {
-      return new  BalanceSheet( fromDate,  toDate, new HashMap<Account, Money>(), new HashMap<Account, Money>(),
+	public BalanceSheet generateBalanceSheet(Time asofDate) {
+      return new  BalanceSheet(asofDate, new HashMap<Account, Money>(), new HashMap<Account, Money>(),
             new HashMap<Account, Money>(), new Money("USD", new BigDecimal(0), "Dollars"), new Money("USD", new BigDecimal(0), "Dollars") );
 	}
 	
