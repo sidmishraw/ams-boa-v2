@@ -126,7 +126,6 @@ public class Ledger implements Serializable {
 			builder.append(as.toString);
 			builder.append("\n");
 		}
-
 		builder.append(", dateGenerated=");
 		builder.append(dateGenerated);
 		builder.append("]");
