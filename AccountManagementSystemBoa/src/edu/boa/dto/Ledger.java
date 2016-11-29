@@ -3,7 +3,6 @@ package edu.boa.dto;
 import java.io.Serializable;
 import java.util.*;
 
-import edu.boa.bo.Account;
 import edu.boa.utils.time.Time;
 
 /**
@@ -45,14 +44,14 @@ public class Ledger implements Serializable {
 	/**
 	 * @return the accounts
 	 */
-	public Set<Account> getAccountSummaries() {
+	public Set<AccountSummary> getAccountSummaries() {
 		return accountSummaries;
 	}
 
 	/**
 	 * @param accounts the accounts to set
 	 */
-	public void setAccountSummaries(Set<AccountSummaries> accountSummaries) {
+	public void setAccountSummaries(Set<AccountSummary> accountSummaries) {
 		this.accountSummaries = accountSummaries;
 	}
 
@@ -101,7 +100,7 @@ public class Ledger implements Serializable {
 			if (other.accountSummaries != null) {
 				return false;
 			}
-		} else if (!accountSummaries.equals(other.accounts)) {
+		} else if (!accountSummaries.equals(other.accountSummaries)) {
 			return false;
 		}
 		if (dateGenerated == null) {
@@ -123,7 +122,7 @@ public class Ledger implements Serializable {
 		builder.append("Ledger [accountSummaries=");
 		builder.append("\n");
 		for (AccountSummary as: accountSummaries) {
-			builder.append(as.toString);
+			builder.append(as.toString());
 			builder.append("\n");
 		}
 		builder.append(", dateGenerated=");
