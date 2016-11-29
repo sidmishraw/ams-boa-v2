@@ -37,27 +37,22 @@ public class AccountManagementService {
 	 * @param accountType 
 	 * @return
 	 */
-   public boolean createAccount(String accountName, AccountType accountType)
+   public Account createAccount(String accountName, AccountType accountType) throws SaveFailedException
    {
       Account a = new Account(accountName,
             new Money("USD", new BigDecimal(0), "Dollars"), accountType);
       //check for unique name and save account
-      try
-      {
-         AccountManagementDAO.getInstance().getAccount(accountName);
-         AccountManagementDAO.getInstance().saveAccount(a);
-      } catch (Exception e)
-      {
-         return false;
-      }
-      return true;
+      
+      AccountManagementDAO.getInstance().saveAccount(a);
+      
+      return a;
    }
 
 	/**
 	 * @param accountName 
 	 * @return
 	 */
-	public boolean reverseAccount(String accountName) {
+	public boolean reverseAccount(String accountID) {
 		// TODO implement here
 		return false;
 	}
