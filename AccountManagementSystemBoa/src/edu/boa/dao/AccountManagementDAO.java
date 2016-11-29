@@ -99,4 +99,31 @@ public class AccountManagementDAO {
 		return transactions;
 	}
 
+	/**
+	 * gets all the accounts 
+	 * 
+	 * @return Set<Account>
+	 */
+	public Set<Account> getAllAccounts() {
+
+		Set<Account> allAccounts = new HashSet<>();
+
+		for ( Map.Entry<String, Account> entry : accountStore.entrySet() ) {
+
+			allAccounts.add(entry.getValue());
+		}
+
+		return allAccounts;
+	}
+
+	/**
+	 * 
+	 * @return Set<Transaction>
+	 */
+	public Set<Transaction> getAllTransactions() {
+
+		Set<Transaction> allTransactions = new HashSet<>(transactionStore);
+
+		return allTransactions;
+	}
 }
