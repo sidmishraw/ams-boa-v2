@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import edu.boa.bo.Account;
@@ -16,21 +15,35 @@ import edu.boa.dto.BalanceSheet;
 import edu.boa.dto.Journal;
 import edu.boa.dto.Ledger;
 import edu.boa.dto.ProfitLossStatement;
-import edu.boa.exceptions.NotSameCurrencyException;
 import edu.boa.exceptions.SaveFailedException;
 import edu.boa.exceptions.UnbalancedTransactionException;
 import edu.boa.utils.Money;
 import edu.boa.utils.time.Time;
 import edu.boa.dao.AccountManagementDAO;
 /**
- * @author Boa
+ * @author sidmishraw
  */
-public class AccountManagementService {
+public class AccountManagementService implements HRRelatedAMSService, FulfillmentRelatedAMSService {
+
+	private static AccountManagementService accountManagementService = null;
 
 	/**
 	 * Default constructor
 	 */
-	public AccountManagementService() {
+	private AccountManagementService() {}
+
+	/**
+	 * 
+	 * @return AccountManagementService
+	 */
+	public static AccountManagementService getInstance() {
+
+		if ( null == accountManagementService ) {
+
+			return new AccountManagementService();
+		}
+
+		return accountManagementService;
 	}
 
 	/**
@@ -146,6 +159,24 @@ public class AccountManagementService {
 	public BalanceSheet generateBalanceSheet(Time asofDate) {
       return new  BalanceSheet(asofDate, new HashMap<Account, Money>(), new HashMap<Account, Money>(),
             new HashMap<Account, Money>(), new Money("USD", new BigDecimal(0), "Dollars"), new Money("USD", new BigDecimal(0), "Dollars") );
+	}
+
+	@Override
+	public Account createEmployeeAccount(String employeeName) throws SaveFailedException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean payEmployee(String employeeAccountId, Money amount) throws UnbalancedTransactionException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean payEmployees(File file) throws UnbalancedTransactionException {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 
