@@ -26,32 +26,30 @@ public class BalanceSheet implements Serializable {
 	/**
 	 * 
 	 */
-	private Time fromDate, toDate;
+	private Time asofDate;
 
 	/**
 	 * 
 	 */
 	private Map<Account,Money> assets, liabilities, equities;
 
-	/**
+
+   /**
 	 * 
 	 */
 	private Money assetsLessLiabilities, totalEquity;
 
 	/**
-	 * @param fromDate
-	 * @param toDate
+	 * @param asofDate
 	 * @param assets
 	 * @param liabilities
 	 * @param equities
 	 * @param assetsLessLiabilities
 	 * @param totalEquity
 	 */
-	public BalanceSheet(Time fromDate, Time toDate, Map<Account, Money> assets, Map<Account, Money> liabilities,
+	public BalanceSheet(Time asofDate, Map<Account, Money> assets, Map<Account, Money> liabilities,
 			Map<Account, Money> equities, Money assetsLessLiabilities, Money totalEquity) {
 		super();
-		this.fromDate = fromDate;
-		this.toDate = toDate;
 		this.assets = assets;
 		this.liabilities = liabilities;
 		this.equities = equities;
@@ -59,209 +57,140 @@ public class BalanceSheet implements Serializable {
 		this.totalEquity = totalEquity;
 	}
 
-	/**
-	 * @return the fromDate
-	 */
-	public Time getFromDate() {
-		return fromDate;
-	}
+   public Time getAsofDate()
+   {
+      return asofDate;
+   }
 
-	/**
-	 * @param fromDate the fromDate to set
-	 */
-	public void setFromDate(Time fromDate) {
-		this.fromDate = fromDate;
-	}
+   public void setAsofDate(Time asofDate)
+   {
+      this.asofDate = asofDate;
+   }
 
-	/**
-	 * @return the toDate
-	 */
-	public Time getToDate() {
-		return toDate;
-	}
+   public Map<Account, Money> getAssets()
+   {
+      return assets;
+   }
 
-	/**
-	 * @param toDate the toDate to set
-	 */
-	public void setToDate(Time toDate) {
-		this.toDate = toDate;
-	}
+   public void setAssets(Map<Account, Money> assets)
+   {
+      this.assets = assets;
+   }
 
-	/**
-	 * @return the assets
-	 */
-	public Map<Account, Money> getAssets() {
-		return assets;
-	}
+   public Map<Account, Money> getLiabilities()
+   {
+      return liabilities;
+   }
 
-	/**
-	 * @param assets the assets to set
-	 */
-	public void setAssets(Map<Account, Money> assets) {
-		this.assets = assets;
-	}
+   public void setLiabilities(Map<Account, Money> liabilities)
+   {
+      this.liabilities = liabilities;
+   }
 
-	/**
-	 * @return the liabilities
-	 */
-	public Map<Account, Money> getLiabilities() {
-		return liabilities;
-	}
+   public Map<Account, Money> getEquities()
+   {
+      return equities;
+   }
 
-	/**
-	 * @param liabilities the liabilities to set
-	 */
-	public void setLiabilities(Map<Account, Money> liabilities) {
-		this.liabilities = liabilities;
-	}
+   public void setEquities(Map<Account, Money> equities)
+   {
+      this.equities = equities;
+   }
 
-	/**
-	 * @return the equities
-	 */
-	public Map<Account, Money> getEquities() {
-		return equities;
-	}
+   public Money getAssetsLessLiabilities()
+   {
+      return assetsLessLiabilities;
+   }
 
-	/**
-	 * @param equities the equities to set
-	 */
-	public void setEquities(Map<Account, Money> equities) {
-		this.equities = equities;
-	}
+   public void setAssetsLessLiabilities(Money assetsLessLiabilities)
+   {
+      this.assetsLessLiabilities = assetsLessLiabilities;
+   }
 
-	/**
-	 * @return the assetsLessLiabilities
-	 */
-	public Money getAssetsLessLiabilities() {
-		return assetsLessLiabilities;
-	}
+   public Money getTotalEquity()
+   {
+      return totalEquity;
+   }
 
-	/**
-	 * @param assetsLessLiabilities the assetsLessLiabilities to set
-	 */
-	public void setAssetsLessLiabilities(Money assetsLessLiabilities) {
-		this.assetsLessLiabilities = assetsLessLiabilities;
-	}
+   public void setTotalEquity(Money totalEquity)
+   {
+      this.totalEquity = totalEquity;
+   }
 
-	/**
-	 * @return the totalEquity
-	 */
-	public Money getTotalEquity() {
-		return totalEquity;
-	}
+   @Override
+   public String toString()
+   {
+      return "BalanceSheet [asofDate=" + asofDate + ", assets=" + assets
+            + ", liabilities=" + liabilities + ", equities=" + equities
+            + ", assetsLessLiabilities=" + assetsLessLiabilities
+            + ", totalEquity=" + totalEquity + "]";
+   }
 
-	/**
-	 * @param totalEquity the totalEquity to set
-	 */
-	public void setTotalEquity(Money totalEquity) {
-		this.totalEquity = totalEquity;
-	}
+   @Override
+   public int hashCode()
+   {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + ((asofDate == null) ? 0 : asofDate.hashCode());
+      result = prime * result + ((assets == null) ? 0 : assets.hashCode());
+      result = prime * result + ((assetsLessLiabilities == null) ? 0
+            : assetsLessLiabilities.hashCode());
+      result = prime * result + ((equities == null) ? 0 : equities.hashCode());
+      result = prime * result
+            + ((liabilities == null) ? 0 : liabilities.hashCode());
+      result = prime * result
+            + ((totalEquity == null) ? 0 : totalEquity.hashCode());
+      return result;
+   }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((assets == null) ? 0 : assets.hashCode());
-		result = prime * result + ((assetsLessLiabilities == null) ? 0 : assetsLessLiabilities.hashCode());
-		result = prime * result + ((equities == null) ? 0 : equities.hashCode());
-		result = prime * result + ((fromDate == null) ? 0 : fromDate.hashCode());
-		result = prime * result + ((liabilities == null) ? 0 : liabilities.hashCode());
-		result = prime * result + ((toDate == null) ? 0 : toDate.hashCode());
-		result = prime * result + ((totalEquity == null) ? 0 : totalEquity.hashCode());
-		return result;
-	}
+   @Override
+   public boolean equals(Object obj)
+   {
+      if (this == obj)
+         return true;
+      if (obj == null)
+         return false;
+      if (getClass() != obj.getClass())
+         return false;
+      BalanceSheet other = (BalanceSheet) obj;
+      if (asofDate == null)
+      {
+         if (other.asofDate != null)
+            return false;
+      } else if (!asofDate.equals(other.asofDate))
+         return false;
+      if (assets == null)
+      {
+         if (other.assets != null)
+            return false;
+      } else if (!assets.equals(other.assets))
+         return false;
+      if (assetsLessLiabilities == null)
+      {
+         if (other.assetsLessLiabilities != null)
+            return false;
+      } else if (!assetsLessLiabilities.equals(other.assetsLessLiabilities))
+         return false;
+      if (equities == null)
+      {
+         if (other.equities != null)
+            return false;
+      } else if (!equities.equals(other.equities))
+         return false;
+      if (liabilities == null)
+      {
+         if (other.liabilities != null)
+            return false;
+      } else if (!liabilities.equals(other.liabilities))
+         return false;
+      if (totalEquity == null)
+      {
+         if (other.totalEquity != null)
+            return false;
+      } else if (!totalEquity.equals(other.totalEquity))
+         return false;
+      return true;
+   }
+	
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof BalanceSheet)) {
-			return false;
-		}
-		BalanceSheet other = (BalanceSheet) obj;
-		if (assets == null) {
-			if (other.assets != null) {
-				return false;
-			}
-		} else if (!assets.equals(other.assets)) {
-			return false;
-		}
-		if (assetsLessLiabilities == null) {
-			if (other.assetsLessLiabilities != null) {
-				return false;
-			}
-		} else if (!assetsLessLiabilities.equals(other.assetsLessLiabilities)) {
-			return false;
-		}
-		if (equities == null) {
-			if (other.equities != null) {
-				return false;
-			}
-		} else if (!equities.equals(other.equities)) {
-			return false;
-		}
-		if (fromDate == null) {
-			if (other.fromDate != null) {
-				return false;
-			}
-		} else if (!fromDate.equals(other.fromDate)) {
-			return false;
-		}
-		if (liabilities == null) {
-			if (other.liabilities != null) {
-				return false;
-			}
-		} else if (!liabilities.equals(other.liabilities)) {
-			return false;
-		}
-		if (toDate == null) {
-			if (other.toDate != null) {
-				return false;
-			}
-		} else if (!toDate.equals(other.toDate)) {
-			return false;
-		}
-		if (totalEquity == null) {
-			if (other.totalEquity != null) {
-				return false;
-			}
-		} else if (!totalEquity.equals(other.totalEquity)) {
-			return false;
-		}
-		return true;
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("BalanceSheet [fromDate=");
-		builder.append(fromDate);
-		builder.append(", toDate=");
-		builder.append(toDate);
-		builder.append(", assets=");
-		builder.append(assets);
-		builder.append(", liabilities=");
-		builder.append(liabilities);
-		builder.append(", equities=");
-		builder.append(equities);
-		builder.append(", assetsLessLiabilities=");
-		builder.append(assetsLessLiabilities);
-		builder.append(", totalEquity=");
-		builder.append(totalEquity);
-		builder.append("]");
-		return builder.toString();
-	}
 }
