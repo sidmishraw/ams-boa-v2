@@ -149,7 +149,11 @@ public class Journal implements Serializable {
 		builder.append(", toDate=");
 		builder.append(toDate);
 		builder.append(", entries=");
-		builder.append(entries);
+		builder.append("\n");
+		for (Transaction t : entries) {
+			builder.append(t.toString());
+			builder.append("\n");
+		}
 		builder.append("]");
 		return builder.toString();
 	}
