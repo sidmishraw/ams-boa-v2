@@ -177,7 +177,11 @@ public class AccountSummary implements Serializable {
 		builder.append("AccountSummary [account=");
 		builder.append(account);
 		builder.append(", transactions=");
-		builder.append(transactions);
+		builder.append("\n");
+		for (Transaction t : transactions) {
+			builder.append(t.toString());
+			builder.append("\n");
+		}
 		builder.append(", fromDate=");
 		builder.append(fromDate);
 		builder.append(", toDate=");
