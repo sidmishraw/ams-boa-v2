@@ -49,13 +49,13 @@ public class Account implements Serializable {
 	 * @param balance
 	 * @param type
 	 */
-	public Account(String name, Money balance, AccountType type) {
+	public Account(String name, Money balance, AccountType type, boolean isReversed) {
 
 		super();
 		this.name = name;
 		this.balance = balance;
 		this.type = type;
-		this.isReversed = false;
+		this.isReversed = isReversed;
 	}
 
 	public Boolean getIsReversed()
