@@ -154,6 +154,7 @@ public class Journal implements Serializable {
 			builder.append(t.toString());
 			builder.append("\n");
 		}
+		
 		builder.append("]");
 		return builder.toString();
 	}
