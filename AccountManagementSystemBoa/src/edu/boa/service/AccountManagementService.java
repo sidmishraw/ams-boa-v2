@@ -15,6 +15,7 @@ import edu.boa.dto.BalanceSheet;
 import edu.boa.dto.Journal;
 import edu.boa.dto.Ledger;
 import edu.boa.dto.ProfitLossStatement;
+import edu.boa.exceptions.AccountNotFoundException;
 import edu.boa.exceptions.SaveFailedException;
 import edu.boa.exceptions.UnbalancedTransactionException;
 import edu.boa.utils.Money;
@@ -64,10 +65,12 @@ public class AccountManagementService implements HRRelatedAMSService, Fulfillmen
 	/**
 	 * @param accountName 
 	 * @return
+	 * @throws AccountNotFoundException 
 	 */
-	public boolean reverseAccount(String accountID) {
+	public boolean reverseAccount(String accountID) throws AccountNotFoundException {
 		// TODO implement here
-		return false;
+		AccountManagementDAO.getInstance().getAccount(accountID).setIsReversed(true);
+		return AccountManagementDAO.getInstance().getAccount(accountID).getIsReversed();
 	}
 
 	/**
