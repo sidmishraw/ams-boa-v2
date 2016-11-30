@@ -54,7 +54,7 @@ public class AccountManagementService implements HRRelatedAMSService, Fulfillmen
    public Account createAccount(String accountName, AccountType accountType) throws SaveFailedException
    {
       Account a = new Account(accountName,
-            new Money("USD", new BigDecimal(0), "Dollars"), accountType);
+            new Money("USD", new BigDecimal(0), "Dollars"), accountType, false);
       //check for unique name and save account
       
       AccountManagementDAO.getInstance().saveAccount(a);
