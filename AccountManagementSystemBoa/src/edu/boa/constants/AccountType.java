@@ -1,9 +1,11 @@
 package edu.boa.constants;
 
+import java.io.Serializable;
+
 /**
  * @author sidmishraw
  */
-public enum AccountType {
+public enum AccountType implements Serializable {
 
 	ASSET,
 	LIABILITY,

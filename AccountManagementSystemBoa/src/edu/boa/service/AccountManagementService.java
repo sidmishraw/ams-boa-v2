@@ -51,7 +51,7 @@ public class AccountManagementService implements HRRelatedAMSService, Fulfillmen
 	/**
 	 * @param accountName 
 	 * @param accountType 
-	 * @return
+	 * @return Account
 	 */
    public Account createAccount(String accountName, AccountType accountType) throws SaveFailedException
    {
@@ -65,7 +65,7 @@ public class AccountManagementService implements HRRelatedAMSService, Fulfillmen
 
 	/**
 	 * @param accountName 
-	 * @return
+	 * @return boolean
 	 * @throws AccountNotFoundException 
 	 */
 	public boolean reverseAccount(String accountID) throws AccountNotFoundException {
@@ -78,7 +78,7 @@ public class AccountManagementService implements HRRelatedAMSService, Fulfillmen
 	 * @param debitAccount 
 	 * @param creditAccount 
 	 * @param amount 
-	 * @return
+	 * @return boolean
 	 * @throws NotSameCurrencyException 
 	 */
    public boolean transferFund(Account debitAccount, Account creditAccount,
@@ -87,7 +87,8 @@ public class AccountManagementService implements HRRelatedAMSService, Fulfillmen
       Transaction t = new Transaction(debitAccount, creditAccount, amount,
             new Time(Calendar.getInstance().getTimeInMillis()));
       AccountManagementDAO d = AccountManagementDAO.getInstance();
-      //check 'equity = assets - liabilities'
+
+      //TODO check 'equity = assets - liabilities' --- pending
 
       if ( debitAccount.getType().equals(AccountType.ASSET)
             || debitAccount.getType().equals(AccountType.EXPENSE) ) {
@@ -129,7 +130,7 @@ public class AccountManagementService implements HRRelatedAMSService, Fulfillmen
 
 	/**
 	 * @param file 
-	 * @return
+	 * @return boolean
 	 */
 	public boolean transferFund(File file) throws UnbalancedTransactionException {
 		// TODO implement here
@@ -139,7 +140,7 @@ public class AccountManagementService implements HRRelatedAMSService, Fulfillmen
 	/**
 	 * @param fromDate 
 	 * @param toDate 
-	 * @return
+	 * @return Journal
 	 */
 	public Journal viewJournal(Time fromDate, Time toDate) {
 		// TODO implement here
@@ -150,7 +151,7 @@ public class AccountManagementService implements HRRelatedAMSService, Fulfillmen
 	 * @param account 
 	 * @param toDate 
 	 * @param fromDate 
-	 * @return
+	 * @return AccountSummary
 	 * @throws Exception 
 	 */
 	public AccountSummary viewTransactionsAndBalanceOfAccount(Account account, Time toDate, Time fromDate) throws Exception {
@@ -166,7 +167,7 @@ public class AccountManagementService implements HRRelatedAMSService, Fulfillmen
 	}
 
 	/**
-	 * @return
+	 * @return Ledger
 	 */
 	public Ledger viewLedger() {
 		// TODO implement here
@@ -176,7 +177,7 @@ public class AccountManagementService implements HRRelatedAMSService, Fulfillmen
 	/**
 	 * @param fromDate 
 	 * @param toDate 
-	 * @return
+	 * @return ProfitLossStatement
 	 */
 	public ProfitLossStatement generateProfitLossStatement(Time fromDate, Time toDate) {
 	   return new  ProfitLossStatement( fromDate,  toDate, new HashMap<Account, Money>(), new HashMap<Account, Money>(),
@@ -186,7 +187,7 @@ public class AccountManagementService implements HRRelatedAMSService, Fulfillmen
 	/**
 	 * @param fromDate 
 	 * @param toDate 
-	 * @return
+	 * @return BalanceSheet
 	 */
 	public BalanceSheet generateBalanceSheet(Time asofDate) {
       return new  BalanceSheet(asofDate, new HashMap<Account, Money>(), new HashMap<Account, Money>(),
@@ -210,6 +211,4 @@ public class AccountManagementService implements HRRelatedAMSService, Fulfillmen
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
-
 }
