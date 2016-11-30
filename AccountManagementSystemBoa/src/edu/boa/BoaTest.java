@@ -1,15 +1,20 @@
 package edu.boa;
 
+import java.math.BigDecimal;
+
 import edu.boa.bo.Account;
 import edu.boa.constants.AccountType;
 import edu.boa.dao.AccountManagementDAO;
 import edu.boa.exceptions.AccountNotFoundException;
+import edu.boa.exceptions.NotSameCurrencyException;
 import edu.boa.exceptions.SaveFailedException;
+import edu.boa.exceptions.UnbalancedTransactionException;
 import edu.boa.service.AccountManagementService;
+import edu.boa.utils.Money;
 
 public class BoaTest {
 
-	public static void main(String[] args) throws SaveFailedException, AccountNotFoundException {
+	public static void main(String[] args) throws SaveFailedException, AccountNotFoundException, UnbalancedTransactionException, NotSameCurrencyException {
 		
 		//simulate launching account management service
 		AccountManagementService ams = AccountManagementService.getInstance();
@@ -42,9 +47,10 @@ public class BoaTest {
 
 		//demo for use case: One at a time funds transfer
 		
-		
-		
-		
+		//
+		ams.transferFund(checking, investments, new Money("USD", new BigDecimal(100000), "Dollars"));
+		System.out.println(investments); // debit asset +10000
+      System.out.println(checking);	// credit equity +10000 
 		
 		
 		}
