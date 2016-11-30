@@ -15,6 +15,7 @@ import edu.boa.dto.BalanceSheet;
 import edu.boa.dto.Journal;
 import edu.boa.dto.Ledger;
 import edu.boa.dto.ProfitLossStatement;
+import edu.boa.exceptions.NotSameCurrencyException;
 import edu.boa.exceptions.SaveFailedException;
 import edu.boa.exceptions.UnbalancedTransactionException;
 import edu.boa.utils.Money;
@@ -75,14 +76,42 @@ public class AccountManagementService implements HRRelatedAMSService, Fulfillmen
 	 * @param creditAccount 
 	 * @param amount 
 	 * @return
+	 * @throws NotSameCurrencyException 
 	 */
    public boolean transferFund(Account debitAccount, Account creditAccount,
-         Money amount) throws UnbalancedTransactionException
+         Money amount) throws UnbalancedTransactionException, NotSameCurrencyException
    {
       Transaction t = new Transaction(debitAccount, creditAccount, amount,
             new Time(Calendar.getInstance().getTimeInMillis()));
       AccountManagementDAO d = AccountManagementDAO.getInstance();
       //check 'equity = assets - liabilities'
+
+      if ( debitAccount.getType().equals(AccountType.ASSET)
+            || debitAccount.getType().equals(AccountType.EXPENSE) ) {
+
+         Money currencyBalance = debitAccount.getBalance();
+
+         debitAccount.setBalance(currencyBalance.add(amount));
+      } else {
+
+         Money currencyBalance = debitAccount.getBalance();
+
+         debitAccount.setBalance(currencyBalance.subtract(amount));
+      }
+
+      if ( creditAccount.getType().equals(AccountType.LIABILITY)
+            || creditAccount.getType().equals(AccountType.STOCKHOLDERS_EQUITY)
+            || creditAccount.getType().equals(AccountType.REVENUE) ) {
+
+         Money currencyBalance = creditAccount.getBalance();
+
+         creditAccount.setBalance(currencyBalance.add(amount));
+      } else {
+
+         Money currencyBalance = creditAccount.getBalance();
+
+         creditAccount.setBalance(currencyBalance.subtract(amount));
+      }
 
       try
       {
